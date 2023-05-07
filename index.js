@@ -36,8 +36,11 @@ const hide = hideDisplay ? 'style="display: none;"' : `class=${hideClass}`;
 const prefix = args.prefix ? args.prefix : '';
 const suffix = args.suffix ? args.suffix : '';
 
+// addViews
+const addViews = Boolean(args.addViews);
+
 const $dom = $.load(`
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="0" height="0" ${hide}></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ${hide}></svg>
 `);
 const $newSvg = $dom('svg');
 
@@ -65,12 +68,22 @@ function parseSvg(file) {
         });
     }
 
+    const name = `${prefix}${fileName}${suffix}`;
     const $symbol = $('<symbol></symbol>');
     $symbol.attr('viewbox', $svg.attr('viewbox'));
-    $symbol.attr('id', `${prefix}${fileName}${suffix}`);
+    $symbol.attr('id', name);
     $symbol.append($svg.contents());
-
     $newSvg.append($symbol);
+    
+    if (!addViews) return;
+    // add views and use xlink:href
+    const $view = $('<view></view>');
+    $view.attr('id', `${name}-v`);
+    $view.attr('viewbox', $svg.attr('viewbox'));
+    $newSvg.append($view);
+    const $use = $('<use></use>');
+    $use.attr('xlink:href', `#${name}`);
+    $newSvg.append($use);
 }
 
 function writeFile() {

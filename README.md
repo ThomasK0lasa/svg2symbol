@@ -1,6 +1,6 @@
 # svg2symbol
 
-Simple and quick symbol maker. Can strip fills, strokes, styles - all, the key one, or except the key one.
+Simple and quick symbol maker. Can strip fills, strokes, styles - all, the key one, or except the key one. Also can add view and use tags which allow for svg symbols use as a css background property. *Examples coming soon.*
 
 ## Quick start
 
@@ -84,6 +84,14 @@ Add specific class to generated svg. By default adds **hidden** as it is typical
 --hideDisplay (Boolean) [false]
 ```
 Sets "display: none" in generated svg inline style. If this is used then hideClass is ignored. (?)
+<br><br>
+
+```js
+--addViews (Boolean) [false]
+```
+Adds view and use tags inside svg so you can use symbol by fragment identifier. Prepends **-v** to view id as it can't be the same as symbol id. In the end you call it like this:
+
+`background: url(symbols.svg#symbolname-v) no-repeat;`
 
 
 ## Usage examples
