@@ -1,6 +1,6 @@
 # svg2symbol
 
-Simple and quick symbol maker. Can strip fills, strokes, styles - all, the key one, or except the key one. Also can add view and use tags which allow for svg symbols use as a css background property. *Examples coming soon.*
+Simple and quick symbol maker. Can strip fills, strokes, styles - all, the key one, or except the key one. Also allows for CSS background use with help of svg fragment identifier. *Use examples coming soon.*
 
 ## Quick start
 
@@ -87,11 +87,28 @@ Sets "display: none" in generated svg inline style. If this is used then hideCla
 <br><br>
 
 ```js
---addViews (Boolean) [false]
+--cssBgSupport (Boolean) [false]
 ```
-Adds view and use tags inside svg so you can use symbol by fragment identifier. Prepends **-v** to view id as it can't be the same as symbol id. In the end you call it like this:
+Adds new svg elements (view, g, use) to allow use of svg fragments as css background property. Prepends **-v** to view id as it can't be the same as symbol id. In the end you call it like this:
 
 `background: url(symbols.svg#symbolname-v) no-repeat;`
+
+**Notice:** **cssBgSupport** adds global style (specific for svg2symbol generated svgs only) inside the svg file - it is needed to properly display stacked fragments. If you create multiple symbols collection files then consider adding the css style to your css file and set cssBgSupportStyle to false.
+<br><br>
+
+```js
+--cssBgSupportStyle (Boolean) [false]
+```
+By default it's set to false, but if you set `--cssBgSupport true` then **cssBgSupportStyle** by default is also **true** and if you need you can disable it with `--cssBgSupportStyle false`
+Adds below css style which is required to properly display svg views as css background.
+```css
+.svg2symbol view + g {
+    display: none;
+}
+.svg2symbol view:target + g {
+    display: inline;
+}
+```
 
 
 ## Usage examples

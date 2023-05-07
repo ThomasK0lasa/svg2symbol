@@ -36,13 +36,35 @@ const hide = hideDisplay ? 'style="display: none;"' : `class=${hideClass}`;
 const prefix = args.prefix ? args.prefix : '';
 const suffix = args.suffix ? args.suffix : '';
 
-// addViews
-const addViews = Boolean(args.addViews);
+// add css background support
+const cssBgSupport = Boolean(args.cssBgSupport);
+let cssBgSupportStyle = false;
+if (cssBgSupport) {
+    cssBgSupportStyle = args.hasOwnProperty('cssBgSupportStyle') ? args.cssBgSupportStyle : true;
+}
 
 const $dom = $.load(`
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ${hide}></svg>
 `);
 const $newSvg = $dom('svg');
+
+// add bg style to svg - if we support css bg and user didn't ommit the bg support style 
+// partialy based on https://css-tricks.com/svg-fragment-identifiers-work/
+if (cssBgSupportStyle) {
+    $newSvg.addClass('svg2symbol');
+    $newSvg.append(`
+    <defs>
+        <style>
+            .svg2symbol view + g {
+                display: none;
+            }
+            .svg2symbol view:target + g {
+                display: inline;
+            }
+        </style>
+    </defs>`)
+}
+
 
 fs.readdir(inputPath, function (err, files) {
     if (err) return process.stderr.write('ERROR: Input error -' + err.code);
@@ -70,20 +92,24 @@ function parseSvg(file) {
 
     const name = `${prefix}${fileName}${suffix}`;
     const $symbol = $('<symbol></symbol>');
-    $symbol.attr('viewbox', $svg.attr('viewbox'));
+    const viewBox = $svg.attr('viewBox') ? $svg.attr('viewBox') : $svg.attr('viewbox');
+    $symbol.attr('viewBox', viewBox);
     $symbol.attr('id', name);
     $symbol.append($svg.contents());
     $newSvg.append($symbol);
     
-    if (!addViews) return;
-    // add views and use xlink:href
+    if (!cssBgSupport) return;
+
+    // add css background support
     const $view = $('<view></view>');
     $view.attr('id', `${name}-v`);
-    $view.attr('viewbox', $svg.attr('viewbox'));
+    $view.attr('viewBox', viewBox);
     $newSvg.append($view);
+    const $g = $('<g></g>');
     const $use = $('<use></use>');
     $use.attr('xlink:href', `#${name}`);
-    $newSvg.append($use);
+    $g.append($use);
+    $newSvg.append($g);
 }
 
 function writeFile() {
