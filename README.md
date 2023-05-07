@@ -1,17 +1,26 @@
 # svg2symbol
 
-Simple and quick symbol maker. Can strip fills, strokes, styles - all, key one, or except the key.
+Simple and quick symbol maker. Can strip fills, strokes, styles - all, the key one, or except the key one.
 
 ## Quick start
 
 ### Install
 `npm i svg2symbol --save-dev`
 
-### As script
-`svg2symbol -i ./tests/svgs -o ./tests/symbols.svg`
+### Package.json script
+Define your script in package.json:<br>
+`"svg": "svg2symbol -i ./test/svgs -o ./test/symbols.svg"`
 
-### Inline cmd
-`npm run env svg2symbol -- -i ./tests/svgs -o ./tests/symbols.svg`
+Run your script<br>
+`npm run svg`
+
+### Run cmd
+
+On linux or mac you can call
+`npm run env svg2symbol -- -i ./test/svgs -o ./test/symbols.svg`
+
+On **windows** and linux, mac
+`npm exec svg2symbol -- -i ./test/svgs -o ./test/symbols.svg`
 
 ## Parameters
 

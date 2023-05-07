@@ -42,7 +42,7 @@ const $dom = $.load(`
 const $newSvg = $dom('svg');
 
 fs.readdir(inputPath, function (err, files) {
-    if (err) return process.stderr.write('ERROR: ' + err.code);
+    if (err) return process.stderr.write('ERROR: Input error -' + err.code);
     files.forEach(parseSvg);
     writeFile();
 })
@@ -75,7 +75,7 @@ function parseSvg(file) {
 
 function writeFile() {
     fs.writeFile(outputPath, $dom.html(), err => {
-        if (err) return process.stderr.write('ERROR: ' + err.code);
+        if (err) return process.stderr.write('ERROR: Output error - ' + err.code);
     });
 }
 
