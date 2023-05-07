@@ -1,0 +1,33 @@
+{
+  "name": "svg2symbol",
+  "version": "1.0.0",
+  "description": "Simple svg symbols generator with basic attributes stripping options.",
+  "main": "index.js",
+  "bin": {
+    "svg2symbol": "./index.js"
+  },
+  "scripts": {
+    "test": "to be done"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThomasK0lasa/svg2symbol"
+  },
+  "keywords": [
+    "svg",
+    "symbol",
+    "icon",
+    "generator",
+    "cli"
+  ],
+  "author": "@ThomasK0lasa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThomasK0lasa/svg2symbol/issues"
+  },
+  "homepage": "https://github.com/ThomasK0lasa/svg2symbol#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "yargs": "^17.7.2"
+  }
+}
