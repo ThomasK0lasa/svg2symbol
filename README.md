@@ -11,7 +11,7 @@ npm i svg2symbol --save-dev
 
 ### Package.json script
 Define your script in package.json:<br>
-```json
+```
 scripts: {
     "svg": "svg2symbol -i ./test/svgs -o ./test/symbols.svg"
 }
